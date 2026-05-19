@@ -82,10 +82,4 @@ One specialist doctor is seeded per department automatically on first run.
 - Appointment booking was POSTing to wrong endpoint `/api/appointments` instead of `/api/appointments/book`
 
 ---
-## 👨‍💻 Author
-
-**Sambit Kumar Panda**
-MCA — Indira Gandhi Institute of Technology, Sarang
-GitHub: https://github.com/SambitKumarMohapatra
-
 ---
