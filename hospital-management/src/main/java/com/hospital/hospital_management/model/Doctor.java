@@ -1,6 +1,7 @@
 package com.hospital.hospital_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,9 @@ public class Doctor {
     private String email;
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
+    @JsonIgnoreProperties("doctors")
     private Department department;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
@@ -43,7 +45,7 @@ public class Doctor {
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
 
-    @JsonIgnore
+
     public Department getDepartment() { return department; }
     public void setDepartment(Department department) { this.department = department; }
 

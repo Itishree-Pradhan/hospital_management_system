@@ -1,5 +1,6 @@
 package com.hospital.hospital_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Department {
     private String description;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnoreProperties("department")
     private List<Doctor> doctors = new ArrayList<>();
 
     public Department() {}

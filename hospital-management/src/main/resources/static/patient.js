@@ -134,43 +134,39 @@ async function bookAppointment(event) {
     const form = event.target;
     const formData = new FormData(form);
 
+    // ✅ Flat fields matching AppointmentRequestDTO exactly
     const appointmentData = {
-        patient: {
-            name: formData.get('patientName'),
-            email: formData.get('patientEmail'),
-            phone: formData.get('patientPhone')
-        },
-        doctor: { id: parseInt(formData.get('doctor')) },
-        department: { id: parseInt(formData.get('department')) },
-        appointmentDate: formData.get('appointmentDate'),
-        appointmentTime: formData.get('appointmentTime'),
+        patientName: formData.get('patientName'),
+        patientEmail: formData.get('patientEmail'),
+        patientPhone: formData.get('patientPhone'),
+        doctorId: parseInt(formData.get('doctor')),
+        departmentId: parseInt(formData.get('department')),
+        appointmentDate: formData.get('appointmentDate'),   // "2026-05-29" format ✅
+        appointmentTime: formData.get('appointmentTime'),   // "11:30" format ✅
         status: 'BOOKED'
     };
 
-    console.log('📤 Booking appointment with data:', appointmentData);
+    console.log('📤 Sending:', appointmentData);
 
     try {
-        const response = await fetch(`${BASE_URL}/appointments`, {
+        const response = await fetch(`${BASE_URL}/appointments/book`, {  // ✅ correct URL
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(appointmentData)
         });
 
         const result = await response.json();
 
-        if (response.ok) {
+        if (response.ok && result.success) {
             showMessage('✅ Appointment booked successfully!', 'success');
             form.reset();
             resetDoctorDropdown();
-            // Reset department selection to first option
             document.getElementById('department').selectedIndex = 0;
         } else {
-            throw new Error(result.message || 'Failed to book appointment');
+            throw new Error(result.error || 'Failed to book appointment');
         }
     } catch (error) {
-        console.error('❌ Error booking appointment:', error);
+        console.error('❌ Error:', error);
         showMessage('❌ Error: ' + error.message, 'error');
     }
 }

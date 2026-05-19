@@ -40,7 +40,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Doctor> getDoctorsByDepartment(Long departmentId) {
-        Department department = getDepartmentById(departmentId);
-        return doctorRepository.findByDepartment(department);
+        return null;
+    }
+
+    //@Override
+    public List<Doctor> getDoctorsByDepartmentId(Long departmentId) {
+        // First, verify the department exists
+        if (!departmentRepository.existsById(departmentId)) {
+            throw new RuntimeException("Department not found with id: " + departmentId);
+        }
+
+        // Then get doctors for that department
+        return doctorRepository.findByDepartment_Id(departmentId);
     }
 }
