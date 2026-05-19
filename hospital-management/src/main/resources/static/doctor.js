@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api/doctors";
+const API_BASE = "https://hospital-management-system-ht9d.onrender.com/api/doctors";
 
 // Setup event listeners
 document.addEventListener('DOMContentLoaded', function() {
